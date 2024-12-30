@@ -12,10 +12,15 @@ python = "^3.12"
 [tool.poetry.group.dev.dependencies]
 ruff = "^0.8.4"
 pre-commit = "^4.0.1"
+pytest = "^8.3.4"
+pytest-cov = "^6.0.0"
 
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
+
+[tool.pytest.ini_options]
+addopts = "--doctest-modules --cov=src/"
 
 [tool.ruff]
 # Exclude a variety of commonly ignored directories.

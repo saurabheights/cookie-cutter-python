@@ -17,12 +17,17 @@
 
 ### Developer Dependencies
 
+#### Ruff
 We use [Taskfile](https://taskfile.dev/) to allow developers to run common tasks. Do enable [autocompletion](https://taskfile.dev/installation/#setup-completions).
 
 ```shell
 sudo snap install task --classic
 echo "source ~/.task.bash" >> ~/.bashrc
 ```
+
+#### Pre-Commit Hook
+
+You can use pre-commit to trigger `ruff check` and `ruff format` to run on each git commit. 
 
 ## License
 

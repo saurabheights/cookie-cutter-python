@@ -29,4 +29,8 @@ tasks:
     cmds:
       - task: build-docker-stage
         vars: {STAGE_NAME: "dev", IMAGE_NAME: "{{.DEV_IMAGE_NAME}}:{{.IMAGE_VERSION}}"}
+
+  run-pytests:
+    cmds:
+      - docker run --rm -it -v `pwd`:/code {{.DEV_IMAGE_NAME}}:{{.IMAGE_VERSION}} pytest
 {% endraw %}
