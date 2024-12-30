@@ -2,7 +2,7 @@ version: '3'
 
 # Define variables
 vars:
-  MAIN_IMAGE_NAME: {{cookiecutter.project_slug}}
+  PROD_IMAGE_NAME: {{cookiecutter.project_slug}}
   DEV_IMAGE_NAME: {{cookiecutter.project_slug}}_dev
   IMAGE_VERSION: 0.1.0
 
@@ -12,4 +12,21 @@ tasks:
     desc: "Welcome to {{cookiecutter.project_name}}."
     cmds:
       - echo "Welcome to {{cookiecutter.project_name}}."
+
+  build-docker-stage:
+    cmd: DOCKER_BUILDKIT=1 docker build --progress=plain -t {{.IMAGE_NAME}} --target {{.STAGE_NAME}} . -f Dockerfile
+    internal: true
+
+  build-prod-image:
+    desc: "Build the prod docker image."
+    cmds:
+      - echo "Building the Docker image..."
+      - task: build-docker-stage
+        vars: {STAGE_NAME: "prod", IMAGE_NAME: "{{.PROD_IMAGE_NAME}}:{{.IMAGE_VERSION}}"}
+
+  build-dev-image:
+    desc: "Build the dev docker image."
+    cmds:
+      - task: build-docker-stage
+        vars: {STAGE_NAME: "dev", IMAGE_NAME: "{{.DEV_IMAGE_NAME}}:{{.IMAGE_VERSION}}"}
 
