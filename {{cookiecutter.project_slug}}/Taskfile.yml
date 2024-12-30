@@ -12,7 +12,7 @@ tasks:
     desc: "Welcome to {{cookiecutter.project_name}}."
     cmds:
       - echo "Welcome to {{cookiecutter.project_name}}."
-
+{% raw %}
   build-docker-stage:
     cmd: DOCKER_BUILDKIT=1 docker build --progress=plain -t {{.IMAGE_NAME}} --target {{.STAGE_NAME}} . -f Dockerfile
     internal: true
@@ -29,4 +29,4 @@ tasks:
     cmds:
       - task: build-docker-stage
         vars: {STAGE_NAME: "dev", IMAGE_NAME: "{{.DEV_IMAGE_NAME}}:{{.IMAGE_VERSION}}"}
-
+{% endraw %}
