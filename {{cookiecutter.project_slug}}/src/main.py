@@ -1,7 +1,7 @@
-def hello():
+def hello() -> str:
     return "Hello World!"
 
-def doctest():
+def doctest() -> int:
     """a doctest in a docstring
     >>> doctest()
     42

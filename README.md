@@ -7,3 +7,4 @@ This repo supports:
 - [x] Pytest with Doctest and Coverage Report.
 - [x] Taskfile for running tasks easily.
 - [x] Ruff for code linting.
+- [x] Mypy for type checking.
