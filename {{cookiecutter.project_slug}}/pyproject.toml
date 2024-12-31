@@ -21,7 +21,16 @@ requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
 
 [tool.pytest.ini_options]
+# Move cache creation to .cache dir, enable doc test and generate coverage report.
 addopts = "--doctest-modules --cov=src/"
+cache_dir = '.cache/.pytest_cache'
+
+[tool.coverage.run]
+# Move pytest coverage file to .cache directory.
+data_file = '.cache/.coverage'
+
+[tool.mypy]
+cache_dir = '.cache/.mypy_cache'
 
 [tool.ruff]
 # Exclude a variety of commonly ignored directories.
@@ -33,6 +42,7 @@ exclude = [
     ".git-rewrite",
     ".hg",
     ".ipynb_checkpoints",
+    ".cache",
     ".mypy_cache",
     ".nox",
     ".pants.d",
@@ -60,6 +70,8 @@ indent-width = 4
 
 # Assume Python 3.12
 target-version = "py312"
+
+cache-dir = '.cache/.ruff_cache'
 
 [tool.ruff.lint]
 # Enable Pyflakes (`F`) and a subset of the pycodestyle (`E`)  codes by default.
