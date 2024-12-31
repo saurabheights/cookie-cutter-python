@@ -10,6 +10,7 @@ readme = "README.md"
 python = "^3.12"
 
 [tool.poetry.group.dev.dependencies]
+mypy = "^1.14.1"
 ruff = "^0.8.4"
 pre-commit = "^4.0.1"
 pytest = "^8.3.4"
