@@ -22,7 +22,7 @@ We use [Taskfile](https://taskfile.dev/) to allow developers to run common tasks
 
 ```shell
 sudo snap install task --classic
-echo "source ~/.task.bash" >> ~/.bashrc
+echo 'eval "$(task --completion bash)"' >> ~/.bashrc
 ```
 
 #### Pre-Commit Hook
