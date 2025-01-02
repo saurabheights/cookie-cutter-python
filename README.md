@@ -8,3 +8,10 @@ This repo supports:
 - [x] Taskfile for running tasks easily.
 - [x] Ruff for code linting.
 - [x] Mypy for type checking.
+
+# Usage
+
+```
+pip install cookiecutter
+cookiecutter https://github.com/saurabheights/cookie-cutter-python.git
+```
