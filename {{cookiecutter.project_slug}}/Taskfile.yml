@@ -5,6 +5,7 @@ vars:
   PROD_IMAGE_NAME: {{cookiecutter.project_slug}}
   DEV_IMAGE_NAME: {{cookiecutter.project_slug}}_dev
   IMAGE_VERSION: 0.1.0
+  PROJECT_DIR: {{cookiecutter.project_slug}}
 
 tasks:
   # Default task that runs when no task is specified
@@ -36,5 +37,5 @@ tasks:
 
   run-type-check:
     desc: "Run mypy"
-    cmd: docker run --rm -v `pwd`:/code {{.DEV_IMAGE_NAME}}:{{.IMAGE_VERSION}} mypy src/
+    cmd: docker run --rm -v `pwd`:/code {{.DEV_IMAGE_NAME}}:{{.IMAGE_VERSION}} mypy {{.PROJECT_DIR}}/
 {% endraw %}

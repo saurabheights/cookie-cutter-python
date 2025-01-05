@@ -22,7 +22,10 @@ build-backend = "poetry.core.masonry.api"
 
 [tool.pytest.ini_options]
 # Move cache creation to .cache dir, enable doc test and generate coverage report.
-addopts = "--doctest-modules --cov=src/"
+addopts = [
+    "--doctest-modules",
+    "--cov={{cookiecutter.project_slug}}/",
+]
 cache_dir = '.cache/.pytest_cache'
 
 [tool.coverage.run]
