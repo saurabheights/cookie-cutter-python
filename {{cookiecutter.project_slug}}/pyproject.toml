@@ -25,12 +25,17 @@ build-backend = "poetry.core.masonry.api"
 addopts = [
     "--doctest-modules",
     "--cov={{cookiecutter.project_slug}}/",
+    "-p no:cacheprovider",
 ]
-cache_dir = '.cache/.pytest_cache'
 
 [tool.coverage.run]
 # Move pytest coverage file to .cache directory.
 data_file = '.cache/.coverage'
+
+[tool.coverage.report]
+# Skip empty files like __init__.py.
+# https://github.com/pytest-dev/pytest-cov/issues/88#issuecomment-1782719126
+skip_empty = true
 
 [tool.mypy]
 cache_dir = '.cache/.mypy_cache'
