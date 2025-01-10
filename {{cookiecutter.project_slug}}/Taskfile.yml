@@ -31,6 +31,12 @@ tasks:
       - task: build-docker-stage
         vars: {STAGE_NAME: "dev", IMAGE_NAME: "{{.DEV_IMAGE_NAME}}:{{.IMAGE_VERSION}}"}
 
+  run-lint:
+    desc: "Run ruff check and format"
+    cmds:
+      - ruff check --fix
+      - ruff format
+
   run-pytests:
     desc: "Run pytest and doctest"
     cmd: docker run --rm -v `pwd`:/code {{.DEV_IMAGE_NAME}}:{{.IMAGE_VERSION}} pytest
