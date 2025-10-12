@@ -1,20 +1,46 @@
-[tool.poetry]
+[project]
 name = "{{cookiecutter.project_slug}}"
 version = "{{cookiecutter.version}}"
 description = "{{cookiecutter.project_short_description}}"
-authors = ["{{cookiecutter.author}} <{{cookiecutter.email}}>"]
+authors = [
+    {name="{{cookiecutter.author}}", email="{{cookiecutter.email}}"},
+]
 license = "{{cookiecutter.license}}"
 readme = "README.md"
+requires-python = ">=3.9"
+keywords = [
+    "python",  # Add appropriate keywords to tag your project.
+]
+classifiers = [  # https://pypi.org/classifiers/
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: Apache Software License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+]
+dependencies = []
 
-[tool.poetry.dependencies]
-python = "^3.12"
+[dependency-groups]
+dev = [
+    "ruff (>=0.8.4, <1.0.0)",
+    "mypy (>=1.14.1, <2.0.0)",
+    "pre-commit (>=4.0.1, <5.0.0)",
+    "pytest (>=8.3.4, <9.0.0)",
+    "pytest-cov (>=6.0.0, <7.0.0)",
+]
 
-[tool.poetry.group.dev.dependencies]
-mypy = "^1.14.1"
-ruff = "^0.8.4"
-pre-commit = "^4.0.1"
-pytest = "^8.3.4"
-pytest-cov = "^6.0.0"
+[project.urls]
+repository = "https://github.com/{{cookiecutter.github_host_username}}/{{cookiecutter.github_repo_slug}}"
+documentation = "https://python-poetry.org/docs/"
+"Bug Tracker" = "https://github.com/{{cookiecutter.github_host_username}}/{{cookiecutter.github_repo_slug}}/issues"
 
 [build-system]
 requires = ["poetry-core"]
