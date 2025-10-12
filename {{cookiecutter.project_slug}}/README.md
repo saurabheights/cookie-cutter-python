@@ -1,6 +1,6 @@
 <!-- Tip - Pycharm supports easy updating Table of Comment (TOC) using Alt+Enter -->
 <!-- TOC -->
-* [{{cookiecutter.project_name}}](#cookiecutterproject_name)
+* [{{cookiecutter.project_name}}](#{{ cookiecutter.project_name | replace(" ", "-") }})
   * [Introduction](#introduction)
   * [Setup](#setup)
     * [Developer Dependencies](#developer-dependencies)
