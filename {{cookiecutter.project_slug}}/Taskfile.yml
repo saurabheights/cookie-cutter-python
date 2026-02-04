@@ -30,14 +30,14 @@ tasks:
     cmds:
       - task: build-docker-stage
         vars: {STAGE_NAME: "dev", IMAGE_NAME: "{{.DEV_IMAGE_NAME}}:{{.IMAGE_VERSION}}"}
-
+{% endraw %}
   run-lint:
       desc: "Run linters"
       cmds:
         - cmd: ruff check --fix
           ignore_error: true
-        - pyupgrade `find . -name "*.py"`
-
+        - pyupgrade `find {{cookiecutter.project_slug}} -name "*.py"`
+{% raw %}
   run-format:
           - ruff check --select I --fix
           - ruff format
