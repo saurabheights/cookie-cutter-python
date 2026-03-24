@@ -1,7 +1,7 @@
 FROM python:3.12 AS prod
 
 #https://github.com/johnthagen/python-blueprint/blob/main/Dockerfile
-ENV POETRY_VERSION=1.8.5
+ENV POETRY_VERSION=2.1.3
 
 # By default, pip caches copies of downloaded packages from PyPI. These are not useful within
 # a Docker image, so disable this to reduce the size of images.
