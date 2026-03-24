@@ -26,7 +26,9 @@ classifiers = [  # https://pypi.org/classifiers/
     "Topic :: Scientific/Engineering :: Artificial Intelligence",
     "Topic :: Software Development :: Libraries :: Python Modules",
 ]
-dependencies = []
+dependencies = [
+    "requests>=2.32",
+]
 
 [dependency-groups]
 dev = [

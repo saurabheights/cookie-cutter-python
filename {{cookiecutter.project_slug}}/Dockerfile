@@ -1,14 +1,14 @@
-FROM python:3.12 AS prod
+FROM python:3.13 AS prod
 
 #https://github.com/johnthagen/python-blueprint/blob/main/Dockerfile
-ENV POETRY_VERSION=2.1.3
+ENV POETRY_VERSION=2.2.1
 
 # By default, pip caches copies of downloaded packages from PyPI. These are not useful within
 # a Docker image, so disable this to reduce the size of images.
 ENV PIP_NO_CACHE_DIR=1
 # Set ENV variables that make Python more friendly to running inside a container.
 ENV PYTHONDONTWRITEBYTECODE=1
-ENV PYTHONBUFFERED=1
+ENV PYTHONUNBUFFERED=1
 
 # Install Poetry
 RUN curl -sSL https://install.python-poetry.org | python3 -

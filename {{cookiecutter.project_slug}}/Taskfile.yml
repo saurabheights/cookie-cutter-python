@@ -4,7 +4,8 @@ version: '3'
 vars:
   PROD_IMAGE_NAME: {{cookiecutter.project_slug}}
   DEV_IMAGE_NAME: {{cookiecutter.project_slug}}_dev
-  IMAGE_VERSION: 0.1.0
+  IMAGE_VERSION:
+    sh: grep '^version' pyproject.toml | head -1 | sed 's/version = "\(.*\)"/\1/'
   PROJECT_DIR: {{cookiecutter.project_slug}}
 
 tasks:
@@ -36,7 +37,7 @@ tasks:
       cmds:
         - cmd: ruff check --fix
           ignore_error: true
-        - pyupgrade `find {{cookiecutter.project_slug}} -name "*.py"`
+        - pyupgrade `find {{cookiecutter.project_slug}} tests -name "*.py"`
 {% raw %}
   run-format:
           - ruff check --select I --fix
