@@ -5,6 +5,7 @@ on:
     branches: [main]
   pull_request:
     branches: [main]
+  workflow_dispatch:
 
 jobs:
   test:
@@ -14,8 +15,23 @@ jobs:
       matrix:
         python-version: ["3.9", "3.10", "3.11", "3.12", "3.13"]
 
+    permissions:
+      # Required by python-coverage-comment-action to store the coverage report
+      contents: write
+      pull-requests: write
+
     steps:
+      - name: Free Disk Space
+        uses: endersonmenezes/free-disk-space@v3
+        with:
+          remove_android: true
+          remove_dotnet: true
+          remove_haskell: true
+          rm_cmd: "rmz"  # Faster cleanup
+
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
 
       - name: Set up Python {% raw %}${{ matrix.python-version }}{% endraw %}
         uses: actions/setup-python@v5
@@ -25,8 +41,27 @@ jobs:
       - name: Install Poetry
         run: pip install "poetry>=2.0,<3"
 
+      - name: Configure Poetry virtualenv
+        run: poetry config virtualenvs.in-project true
+
+      - name: Cache virtualenv
+        id: cache-venv
+        uses: actions/cache@v4
+        with:
+          path: .venv
+          # Invalidate when poetry.lock changes.
+          key: {% raw %}venv-${{ runner.os }}-${{ matrix.python-version }}-${{ hashFiles('poetry.lock') }}{% endraw %}
+
       - name: Install dependencies
+        if: {% raw %}steps.cache-venv.outputs.cache-hit != 'true'{% endraw %}
         run: poetry install --no-interaction --with dev
 
       - name: Run tests
         run: poetry run pytest
+
+      - name: Upload coverage report
+        if: {% raw %}always() && matrix.python-version == '3.13'{% endraw %}
+        uses: py-cov-action/python-coverage-comment-action@v3
+        with:
+          GITHUB_TOKEN: {% raw %}${{ secrets.GITHUB_TOKEN }}{% endraw %}
+          COVERAGE_DATA_FILE: .cache/.coverage

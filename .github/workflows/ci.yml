@@ -1,0 +1,67 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  test-cookiecutter:
+    name: Generate and test project
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Free Disk Space
+        uses: endersonmenezes/free-disk-space@v3
+        with:
+          remove_android: true
+          remove_dotnet: true
+          remove_haskell: true
+          rm_cmd: "rmz"  # Faster cleanup
+
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+
+      - name: Configure git identity
+        # Required for the post_gen_project.py hook which runs `git commit`
+        run: |
+          git config --global user.email "ci@github.com"
+          git config --global user.name "CI"
+
+      - name: Install cookiecutter
+        run: pip install cookiecutter
+
+      - name: Generate project from template
+        # Uses default values from cookiecutter.json; generates ./python_boilerplate/
+        run: cookiecutter . --no-input
+
+      - name: Install Poetry
+        run: pip install "poetry>=2.0,<3"
+
+      - name: Configure Poetry virtualenv
+        working-directory: python_boilerplate
+        run: poetry config virtualenvs.in-project true
+
+      - name: Cache virtualenv
+        id: cache-venv
+        uses: actions/cache@v4
+        with:
+          path: python_boilerplate/.venv
+          key: venv-${{ runner.os }}-3.13-${{ hashFiles('python_boilerplate/poetry.lock') }}
+
+      - name: Install generated project dependencies
+        if: steps.cache-venv.outputs.cache-hit != 'true'
+        working-directory: python_boilerplate
+        run: poetry install --no-interaction --with dev
+
+      - name: Run tests in generated project
+        working-directory: python_boilerplate
+        run: poetry run pytest
